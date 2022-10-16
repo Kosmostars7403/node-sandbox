@@ -2,3 +2,4 @@ node_modules
 dist
 node-sandbox.iml
 .idea
+.clinic
