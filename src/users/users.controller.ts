@@ -5,10 +5,10 @@ import { inject, injectable } from "inversify"
 import { TYPES } from "../types"
 import { ILogger } from "../logger/logger.interface"
 import "reflect-metadata"
-import { IUsersController } from "./users.interface"
+import { IUsersController } from "./interfaces/users.interface"
 import { UserLoginDto } from "./dto/user-login.dto"
 import { UserRegisterDto } from "./dto/user-register.dto"
-import { IUserService } from "./user.service.interface"
+import { IUserService } from "./interfaces/user.service.interface"
 import { ValidateMiddleware } from "../common/validate.middleware"
 
 @injectable()
@@ -47,6 +47,6 @@ export class UsersController extends BaseController implements IUsersController 
     if (!result) {
       return next(new HTTPError(422, "User with email already exists"))
     }
-    this.ok(res, { email: result.email })
+    this.ok(res, { email: result.email, id: result.id })
   }
 }

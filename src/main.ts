@@ -6,12 +6,14 @@ import { TYPES } from "./types"
 import { ExeptionFilter } from "./error/exeption.filter"
 import { UsersController } from "./users/users.controller"
 import { IExeptionFilter } from "./error/exeption.filter.interface"
-import { IUsersController } from "./users/users.interface"
-import { IUserService } from "./users/user.service.interface"
+import { IUsersController } from "./users/interfaces/users.interface"
+import { IUserService } from "./users/interfaces/user.service.interface"
 import { UserService } from "./users/user.service"
 import { IConfigService } from "./config/config.service.interface"
 import { ConfigService } from "./config/config.service"
 import { PrismaService } from "./database/prisma.service"
+import { IUsersRepository } from "./users/interfaces/users.repository.interface"
+import { UsersRepository } from "./users/users.repository"
 
 export interface IBootstrapReturn {
   appContainer: Container
@@ -25,6 +27,7 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope()
   bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope()
   bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope()
+  bind<IUsersRepository>(TYPES.UsersRepository).to(UsersRepository).inSingletonScope()
   bind<App>(TYPES.Application).to(App)
 })
 
