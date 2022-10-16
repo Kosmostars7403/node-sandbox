@@ -30,12 +30,20 @@ export class UsersController extends BaseController implements IUsersController 
         path: "/login",
         method: "post",
         func: this.login,
+        middlewares: [new ValidateMiddleware(UserLoginDto)],
       },
     ])
   }
 
-  login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction): void {
-    next(new HTTPError(401, "error from login"))
+  async login(
+    { body }: Request<{}, {}, UserLoginDto>,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const result = await this.userService.validateUser(body)
+
+    if (!result) return next(new HTTPError(401, "Wrong credentials", "login"))
+    this.ok(res, { email: body.email })
   }
 
   async register(
