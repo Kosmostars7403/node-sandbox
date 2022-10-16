@@ -10,6 +10,7 @@ import { json } from "body-parser"
 import { IUsersController } from "./users/users.interface"
 import { IExeptionFilter } from "./error/exeption.filter.interface"
 import { IConfigService } from "./config/config.service.interface"
+import { PrismaService } from "./database/prisma.service"
 
 @injectable()
 export class App {
@@ -21,7 +22,8 @@ export class App {
     @inject(TYPES.ILogger) private loggerService: ILogger,
     @inject(TYPES.ExeptionFilter) private exeptionFilter: IExeptionFilter,
     @inject(TYPES.UserController) private userController: UsersController,
-    @inject(TYPES.ConfigService) private configService: IConfigService
+    @inject(TYPES.ConfigService) private configService: IConfigService,
+    @inject(TYPES.PrismaService) private prismaService: PrismaService
   ) {
     this.app = express()
     this.port = 8000
@@ -43,6 +45,7 @@ export class App {
     this.useMiddleware()
     this.useRoutes()
     this.useExeptionFilters()
+    await this.prismaService.connect()
     this.server = this.app.listen(this.port)
     this.loggerService.log("Сервер запущен!")
   }

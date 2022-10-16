@@ -3,3 +3,7 @@ dist
 node-sandbox.iml
 .idea
 .clinic
+prissma/dev.db
+prissma/dev.db-journal
+.env
+
