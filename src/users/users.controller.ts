@@ -10,7 +10,6 @@ import { UserLoginDto } from "./dto/user-login.dto"
 import { UserRegisterDto } from "./dto/user-register.dto"
 import { IUserService } from "./user.service.interface"
 import { ValidateMiddleware } from "../common/validate.middleware"
-import { User } from "./user.entity"
 
 @injectable()
 export class UsersController extends BaseController implements IUsersController {
