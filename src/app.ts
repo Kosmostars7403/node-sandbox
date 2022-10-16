@@ -30,7 +30,7 @@ export class App {
 		this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter))
 	}
 
-	async init(): void {
+	async init(): Promise<void> {
 		this.useRoutes()
 		this.useExeptionFilters()
 		this.server = this.app.listen(this.port)

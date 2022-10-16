@@ -10,7 +10,7 @@ import 'reflect-metadata'
 export class ExeptionFilter implements IExeptionFilter {
 	constructor(@inject(TYPES.ILogger) private logger: ILogger) {}
 
-	catch(err: HTTPError | Error, req: Request, res: Response, next: NextFunction) {
+	catch(err: HTTPError | Error, req: Request, res: Response, next: NextFunction): void {
 		if (err instanceof HTTPError) {
 			this.logger.error(`[${err.context}] ERROR ${err.message}`)
 			res.status(err.statusCode).send({ err: err.message })

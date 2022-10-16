@@ -26,11 +26,11 @@ export class UsersController extends BaseController implements IUsersController 
 		])
 	}
 
-	register(req: Request, res: Response, next: NextFunction) {
+	register(req: Request, res: Response, next: NextFunction): void {
 		this.ok(res, 'login')
 	}
 
-	login(req: Request, res: Response, next: NextFunction) {
+	login(req: Request, res: Response, next: NextFunction): void {
 		next(new HTTPError(401, 'error from login'))
 	}
 }
