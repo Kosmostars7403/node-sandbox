@@ -1,16 +1,15 @@
 import express, { Express } from "express"
 import { Server } from "http"
 import { UsersController } from "./users/users.controller"
-import { ExeptionFilter } from "./error/exeption.filter"
 import { ILogger } from "./logger/logger.interface"
 import { inject, injectable } from "inversify"
 import { TYPES } from "./types"
 import "reflect-metadata"
 import { json } from "body-parser"
-import { IUsersController } from "./users/interfaces/users.interface"
 import { IExeptionFilter } from "./error/exeption.filter.interface"
 import { IConfigService } from "./config/config.service.interface"
 import { PrismaService } from "./database/prisma.service"
+import { AuthMiddleware } from "./common/auth.middleware"
 
 @injectable()
 export class App {
@@ -31,6 +30,8 @@ export class App {
 
   useMiddleware(): void {
     this.app.use(json())
+    const authMiddleware = new AuthMiddleware(this.configService.get("SECRET"))
+    this.app.use(authMiddleware.execute.bind(authMiddleware))
   }
 
   useRoutes(): void {
